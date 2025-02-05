@@ -1,0 +1,11 @@
+feat: 🎉 项目初始化
+
+- 使用 NestJS 搭建基础项目架构
+- 集成 MikroORM + MySQL 数据库支持
+- 配置开发环境（ESLint, Prettier, Jest）
+- 添加基础模块（Core, Config, Database, Demo）
+- 实现日志系统和基础配置
+- 添加 Docker 支持
+- 创建 Git 提交规范文档
+
+BREAKING CHANGE: 初始项目结构确立 
