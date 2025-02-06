@@ -10,7 +10,8 @@ async function bootstrap() {
     // 创建应用实例时就使用Winston
     const app = await NestFactory.create(AppModule, {
         // 禁用默认的日志
-        logger: false,
+        logger: ['error', 'warn', 'debug', 'verbose'],
+        bufferLogs: true,
     });
 
     // 使用Winston Logger

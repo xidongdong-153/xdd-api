@@ -4,7 +4,7 @@ import { LoadStrategy } from '@mikro-orm/core';
 import { LoggerService } from '@nestjs/common';
 import { WinstonModule } from 'nest-winston';
 import { loggerConfig } from './logger.config';
-import stripAnsi from 'strip-ansi';
+// import stripAnsi from 'strip-ansi';
 import { Highlighter } from '@mikro-orm/core';
 
 // 创建一个 Winston logger 实例
@@ -39,7 +39,7 @@ export const mikroOrmConfig = () =>
         debug: ['discovery', 'info', 'query'],
         logger: (message: string) => {
             // 移除 ANSI 颜色代码
-            const cleanMessage = stripAnsi(message);
+            const cleanMessage = message;
             logger.log(cleanMessage, 'MikroORM');
         },
         // 使用无颜色的 highlighter

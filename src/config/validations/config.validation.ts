@@ -23,6 +23,7 @@ export const validationSchema = Joi.object({
     LOG_MAX_SIZE: Joi.string().default('20m'),
 
     // JWT配置验证
-    JWT_SECRET: Joi.string().required(),
+    JWT_ACCESS_SECRET: Joi.string().required(),
+    JWT_REFRESH_SECRET: Joi.string().required(),
     JWT_EXPIRES_IN: Joi.string().default('7d'),
 });

@@ -23,7 +23,8 @@ export interface LoggerConfig {
 }
 
 export interface JwtConfig {
-    secret: string;
+    accessSecret: string;
+    refreshSecret: string;
     expiresIn: string;
 }
 
