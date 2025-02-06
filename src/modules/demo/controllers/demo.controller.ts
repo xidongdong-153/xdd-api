@@ -15,18 +15,20 @@ import { DemoService } from '@/modules/demo/services/demo.service';
 import { CreateDemoDto, UpdateDemoDto, PageDemoDto } from '@/modules/demo/dtos/demo.dto';
 import { Demo } from '@/modules/demo/entities/demo.entity';
 import { LoggerService } from '@/modules/logger/services/logger.service';
+import { Public } from '@/modules/auth/decorators/public.decorator';
 
 /**
  * Demo 控制器
  * @description 提供演示数据的完整 CRUD 操作接口
  */
 @ApiTags('基础演示')
+@Public()
 @Controller('demo')
 export class DemoController {
     constructor(
         private readonly demoService: DemoService,
         private readonly logger: LoggerService,
-    ) {}
+    ) { }
 
     /**
      * 创建演示数据

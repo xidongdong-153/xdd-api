@@ -14,11 +14,13 @@ import { DemoTreeService } from '@/modules/demo/services/demo-tree.service';
 import { CreateDemoTreeDto, UpdateDemoTreeDto } from '@/modules/demo/dtos/demo.dto';
 import { DemoTree } from '@/modules/demo/entities/demo-tree.entity';
 import { TreeNodeData } from '@/modules/core/types';
+import { Public } from '@/modules/auth/decorators/public.decorator';
 
 @ApiTags('基础树形结构演示')
+@Public()
 @Controller('demo-tree')
 export class DemoTreeController {
-    constructor(private readonly demoTreeService: DemoTreeService) {}
+    constructor(private readonly demoTreeService: DemoTreeService) { }
 
     /**
      * 获取树形结构

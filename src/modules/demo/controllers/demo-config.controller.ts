@@ -1,8 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, SerializeOptions } from '@nestjs/common';
 import { ConfigService } from '@/modules/config/config.service';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Public } from '@/modules/auth/decorators/public.decorator';
 
-@ApiTags('配置测试')
+/**
+ * Demo配置演示控制器
+ * @description 用于演示配置模块的使用方式
+ */
+@ApiTags('配置演示')
+@Public()
 @Controller('demo-config')
 export class DemoConfigController {
     constructor(private readonly configService: ConfigService) { }

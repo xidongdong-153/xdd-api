@@ -1,15 +1,17 @@
 import { Controller, Get, SerializeOptions } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { DemoErrorService } from '@/modules/demo/services/demo-error.service';
+import { Public } from '@/modules/auth/decorators/public.decorator';
 
 /**
  * Demo错误演示控制器
  * @description 用于演示各种数据库错误的处理方式
  */
 @ApiTags('错误处理演示')
+@Public()
 @Controller('demo-error')
 export class DemoErrorController {
-    constructor(private readonly demoErrorService: DemoErrorService) {}
+    constructor(private readonly demoErrorService: DemoErrorService) { }
 
     /**
      * 测试表不存在错误
