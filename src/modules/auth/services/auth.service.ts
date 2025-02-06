@@ -5,13 +5,15 @@ import { User } from '@/modules/user/entities/user.entity';
 import { UserStatus } from '@/modules/user/constants/user.enum';
 import { LoginDto, RegisterDto, RefreshTokenDto } from '../dtos/auth.dto';
 import * as argon2 from 'argon2';
+import { ConfigService } from '@/modules/config/config.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly em: EntityManager,
         private readonly jwtService: JwtService,
-    ) {}
+        private readonly configService: ConfigService,
+    ) { }
 
     async validateUser(credential: string, password: string): Promise<User> {
         const user = await this.em.findOne(User, [{ username: credential }, { email: credential }]);
@@ -85,7 +87,7 @@ export class AuthService {
     async refreshToken(dto: RefreshTokenDto) {
         try {
             const payload = await this.jwtService.verifyAsync(dto.refreshToken, {
-                secret: process.env.JWT_REFRESH_SECRET,
+                secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
             });
 
             const user = await this.em.findOne(User, { id: payload.sub });

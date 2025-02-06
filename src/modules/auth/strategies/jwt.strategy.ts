@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { EntityManager } from '@mikro-orm/core';
 import { User } from '@/modules/user/entities/user.entity';
+import { ConfigService } from '@/modules/config/config.service';
 
 interface JwtPayload {
     sub: number;
@@ -12,11 +13,14 @@ interface JwtPayload {
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(private readonly em: EntityManager) {
+    constructor(
+        private readonly em: EntityManager,
+        configService: ConfigService,
+    ) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: process.env.JWT_ACCESS_SECRET,
+            secretOrKey: configService.get<string>('JWT_ACCESS_SECRET'),
         });
     }
 

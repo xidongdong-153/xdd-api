@@ -46,4 +46,4 @@ import { AppInterceptor } from '@/modules/core/providers/app.interceptor';
         { provide: APP_FILTER, useClass: AppFilter },
     ],
 })
-export class AppModule {}
+export class AppModule { }

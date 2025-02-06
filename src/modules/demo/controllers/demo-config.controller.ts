@@ -5,7 +5,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 @ApiTags('配置测试')
 @Controller('demo-config')
 export class DemoConfigController {
-    constructor(private readonly configService: ConfigService) {}
+    constructor(private readonly configService: ConfigService) { }
 
     @Get('')
     @ApiOperation({ summary: '获取应用配置信息' })
@@ -21,7 +21,7 @@ export class DemoConfigController {
         return {
             app: appConfig,
             database: dbConfig,
-            environment: process.env.NODE_ENV,
+            environment: this.configService.get<string>('NODE_ENV'),
         };
     }
 }
