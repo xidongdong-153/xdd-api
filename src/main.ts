@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import metadata from '@/metadata';
 import { ConfigService } from '@/modules/config/config.service';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
     // 创建应用实例时就使用Winston
@@ -24,16 +25,37 @@ async function bootstrap() {
         configService.debugConfig();
 
         const config = new DocumentBuilder()
-            .setTitle(configService.app.name)
-            .setDescription('API文档描述')
+            .setTitle('XDD API')
+            .setDescription('XDD API 接口文档')
             .setVersion('1.0')
+            .addBearerAuth(
+                {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                    name: 'JWT',
+                    description: '输入 JWT token',
+                    in: 'header',
+                },
+                'jwt', // 这个名字要记住，在 @ApiBearerAuth() 装饰器中要用到
+            )
             .build();
         await SwaggerModule.loadPluginMetadata(metadata);
         const documentFactory = () => SwaggerModule.createDocument(app, config);
         SwaggerModule.setup('api-docs', app, documentFactory);
 
+        // 配置全局验证管道
+        app.useGlobalPipes(
+            new ValidationPipe({
+                transform: true,
+                whitelist: true,
+                forbidNonWhitelisted: true,
+                validationError: { target: false },
+            }),
+        );
+
         // 设置全局前缀
-        app.setGlobalPrefix(configService.app.apiPrefix);
+        app.setGlobalPrefix('api');
 
         app.enableCors();
         const port = configService.app.port;

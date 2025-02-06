@@ -1,7 +1,7 @@
 // core.module.ts
 import { MiddlewareConsumer, Module, NestModule, DynamicModule } from '@nestjs/common';
-import { ConfigService } from '@/modules/config/config.service'; //  别忘了导入
-import { LoggerMiddleware } from '@/modules/logger/middlewares/logger.middleware'; //  也别忘了导入
+import { ConfigService } from '@/modules/config/config.service';
+import { LoggerMiddleware } from '@/modules/logger/middlewares/logger.middleware';
 import { LoggerModule } from '@/modules/logger/logger.module';
 
 @Module({})

@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { EntityManager, FilterQuery, FindOptions } from '@mikro-orm/mysql';
+import { EntityManager, FilterQuery, FindOptions, EntityClass } from '@mikro-orm/core';
 import { PaginateOptions, PaginateReturn, PaginateMeta } from '@/modules/database/types';
-import { EntityClass } from '@mikro-orm/core';
 import { BaseEntity } from '@/modules/database/base/base.entity';
 
 /**

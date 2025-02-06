@@ -19,7 +19,7 @@ export abstract class BaseEntity {
      * @remarks 记录创建的时间戳，自动设置
      */
     @Expose()
-    @Property({ comment: '创建时间' })
+    @Property()
     createdAt: Date = new Date();
 
     /**
@@ -27,6 +27,6 @@ export abstract class BaseEntity {
      * @remarks 记录更新的时间戳，自动更新
      */
     @Expose()
-    @Property({ comment: '更新时间', onUpdate: () => new Date() })
+    @Property({ onUpdate: () => new Date() })
     updatedAt: Date = new Date();
 }
