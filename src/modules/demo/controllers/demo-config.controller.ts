@@ -1,6 +1,6 @@
-import { Controller, Get, SerializeOptions } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@/modules/config/config.service';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Public } from '@/modules/auth/decorators/public.decorator';
 
 /**
