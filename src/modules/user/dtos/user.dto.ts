@@ -1,3 +1,5 @@
+import { PartialType } from '@nestjs/mapped-types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
     IsEmail,
     IsEnum,
@@ -7,10 +9,11 @@ import {
     Matches,
     MinLength,
 } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+
 import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
-import { PartialType } from '@nestjs/mapped-types';
+
 import { PaginateDto } from '@/modules/restful/dtos/paginate.dto';
+
 import { UserStatus } from '../constants/user.enum';
 
 /**

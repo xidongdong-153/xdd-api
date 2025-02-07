@@ -1,8 +1,9 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/mysql';
-import { DemoTree } from '@/modules/demo/entities/demo-tree.entity';
-import { CreateDemoTreeDto, UpdateDemoTreeDto } from '@/modules/demo/dtos/demo.dto';
+import { Injectable, BadRequestException } from '@nestjs/common';
+
 import { BaseTreeService } from '@/modules/database/base/base-tree.service';
+import { CreateDemoTreeDto, UpdateDemoTreeDto } from '@/modules/demo/dtos/demo.dto';
+import { DemoTree } from '@/modules/demo/entities/demo-tree.entity';
 
 @Injectable()
 export class DemoTreeService extends BaseTreeService<DemoTree> {

@@ -1,5 +1,6 @@
-import { IsString, IsNotEmpty, IsEmail, MinLength, Matches } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, IsEmail, MinLength, Matches } from 'class-validator';
+
 import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
 
 /**

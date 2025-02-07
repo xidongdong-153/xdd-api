@@ -1,8 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
-import request from 'supertest';
-import { AppModule } from '@/app.module';
 import { EntityManager } from '@mikro-orm/mysql';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import request from 'supertest';
+
+import { AppModule } from '@/app.module';
+
 import { Demo } from '@/modules/demo/entities/demo.entity';
 
 describe('DemoController (e2e)', () => {

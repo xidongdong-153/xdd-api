@@ -1,8 +1,12 @@
 import { Collection, Entity, Enum, ManyToMany, Property } from '@mikro-orm/core';
-import { BaseEntity } from '@/modules/database/base/base.entity';
-import { UserStatus } from '../constants/user.enum';
+
 import { Exclude, Expose, Type } from 'class-transformer';
+
+import { BaseEntity } from '@/modules/database/base/base.entity';
+
 import { Role } from '@/modules/rbac/entities/role.entity';
+
+import { UserStatus } from '../constants/user.enum';
 
 /**
  * 用户实体类

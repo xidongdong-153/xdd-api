@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
+import { Injectable } from '@nestjs/common';
+
 import { User } from '@/modules/user/entities/user.entity';
 
 @Injectable()

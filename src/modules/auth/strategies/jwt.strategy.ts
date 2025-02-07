@@ -1,9 +1,10 @@
+import { EntityManager } from '@mikro-orm/core';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { EntityManager } from '@mikro-orm/core';
-import { User } from '@/modules/user/entities/user.entity';
+
 import { ConfigService } from '@/modules/config/config.service';
+import { User } from '@/modules/user/entities/user.entity';
 
 interface JwtPayload {
     sub: number;

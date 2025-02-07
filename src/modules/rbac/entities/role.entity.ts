@@ -1,8 +1,12 @@
 import { Collection, Entity, ManyToMany, Property } from '@mikro-orm/core';
-import { BaseEntity } from '@/modules/database/base/base.entity';
-import { Permission } from './permission.entity';
-import { User } from '@/modules/user/entities/user.entity';
+
 import { Expose, Type } from 'class-transformer';
+
+import { BaseEntity } from '@/modules/database/base/base.entity';
+
+import { User } from '@/modules/user/entities/user.entity';
+
+import { Permission } from './permission.entity';
 
 /**
  * 角色实体类

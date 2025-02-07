@@ -1,9 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
-import { User } from '../entities/user.entity';
-import { CreateUserDto, UpdateUserDto, QueryUserDto, ChangePasswordDto } from '../dtos/user.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+
 import * as argon2 from 'argon2';
+
 import { BaseService } from '@/modules/database/base/base.service';
+
+import { CreateUserDto, UpdateUserDto, QueryUserDto, ChangePasswordDto } from '../dtos/user.dto';
+import { User } from '../entities/user.entity';
 
 @Injectable()
 export class UserService extends BaseService<User> {

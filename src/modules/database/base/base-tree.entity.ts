@@ -1,8 +1,9 @@
 import { Property, Entity } from '@mikro-orm/core';
-import { Exclude, Expose } from 'class-transformer';
-import { BaseEntity } from './base.entity';
 import { Collection } from '@mikro-orm/core';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
+
+import { BaseEntity } from './base.entity';
 
 @Entity({ abstract: true })
 @Exclude()

@@ -1,10 +1,11 @@
+import { Test, TestingModule } from '@nestjs/testing';
+
+import { PaginateReturn } from '@/modules/database/types';
 import { DemoController } from '@/modules/demo/controllers/demo.controller';
 import { CreateDemoDto } from '@/modules/demo/dtos/create-demo.dto';
 import { UpdateDemoDto } from '@/modules/demo/dtos/update-demo.dto';
-import { DemoService } from '@/modules/demo/services/demo.service';
-import { Test, TestingModule } from '@nestjs/testing';
 import { Demo } from '@/modules/demo/entities/demo.entity';
-import { PaginateReturn } from '@/modules/database/types';
+import { DemoService } from '@/modules/demo/services/demo.service';
 
 describe('DemoController', () => {
     let controller: DemoController;

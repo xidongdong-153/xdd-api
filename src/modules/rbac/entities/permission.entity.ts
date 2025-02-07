@@ -1,5 +1,7 @@
 import { Collection, Entity, ManyToMany, Property } from '@mikro-orm/core';
+
 import { BaseEntity } from '@/modules/database/base/base.entity';
+
 import { Role } from './role.entity';
 
 /**

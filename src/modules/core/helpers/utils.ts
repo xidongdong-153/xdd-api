@@ -13,9 +13,9 @@ export const deepMerge = <T1, T2>(
 ) => {
     const options: deepmerge.Options = {};
     if (arrayMode === 'replace') {
-        options.arrayMerge = (_d, s, _o) => s;
+        options.arrayMerge = (_d, s) => s;
     } else if (arrayMode === 'merge') {
-        options.arrayMerge = (_d, s, _o) => Array.from(new Set([..._d, ...s]));
+        options.arrayMerge = (_d, s) => Array.from(new Set([..._d, ...s]));
     }
     return deepmerge(x, y, options) as T2 extends T1 ? T1 : T1 & T2;
 };

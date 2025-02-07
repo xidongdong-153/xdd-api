@@ -1,7 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
-import { ConfigService } from '@/modules/config/config.service';
+
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+
 import { Public } from '@/modules/auth/decorators/public.decorator';
+import { ConfigService } from '@/modules/config/config.service';
 
 /**
  * Demo配置演示控制器
@@ -11,7 +13,7 @@ import { Public } from '@/modules/auth/decorators/public.decorator';
 @Public()
 @Controller('demo-config')
 export class DemoConfigController {
-    constructor(private readonly configService: ConfigService) { }
+    constructor(private readonly configService: ConfigService) {}
 
     @Get('')
     @ApiOperation({ summary: '获取应用配置信息' })

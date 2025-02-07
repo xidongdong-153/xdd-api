@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/mysql';
+import { Injectable } from '@nestjs/common';
+
 import { Demo } from '@/modules/demo/entities/demo.entity';
 
 /**

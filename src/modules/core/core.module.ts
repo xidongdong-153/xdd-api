@@ -1,8 +1,9 @@
 // core.module.ts
 import { MiddlewareConsumer, Module, NestModule, DynamicModule } from '@nestjs/common';
+
 import { ConfigService } from '@/modules/config/config.service';
-import { LoggerMiddleware } from '@/modules/logger/middlewares/logger.middleware';
 import { LoggerModule } from '@/modules/logger/logger.module';
+import { LoggerMiddleware } from '@/modules/logger/middlewares/logger.middleware';
 
 @Module({})
 export class CoreModule implements NestModule {

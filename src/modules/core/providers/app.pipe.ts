@@ -1,5 +1,3 @@
-import { DTO_VALIDATION_OPTIONS } from '@/modules/core/constants';
-import { deepMerge } from '@/modules/core/helpers/utils';
 import {
     ArgumentMetadata,
     BadRequestException,
@@ -9,6 +7,9 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { isObject, omit } from 'lodash';
+
+import { DTO_VALIDATION_OPTIONS } from '@/modules/core/constants';
+import { deepMerge } from '@/modules/core/helpers/utils';
 
 /**
  * 全局管道,用于处理DTO验证
@@ -55,9 +56,8 @@ export class AppPipe extends ValidationPipe {
             let result = await super.transform(toValidate, metadata);
 
             if (typeof result.transform === 'function') {
-                result = await result.transform(result);
-                const { transform, ...data } = result;
-                result = data;
+                const transformed = await result.transform(result);
+                result = omit(transformed, ['transform']);
             }
 
             this.validatorOptions = originOptions;

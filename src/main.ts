@@ -1,10 +1,13 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+
 import metadata from '@/metadata';
 import { ConfigService } from '@/modules/config/config.service';
-import { ValidationPipe } from '@nestjs/common';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
     // 创建应用实例时就使用Winston

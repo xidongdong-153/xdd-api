@@ -1,6 +1,8 @@
 import { Entity, ManyToOne, OneToMany, Collection } from '@mikro-orm/core';
-import { BaseTreeEntity } from '@/modules/database/base/base-tree.entity';
+
 import { ApiHideProperty } from '@nestjs/swagger';
+
+import { BaseTreeEntity } from '@/modules/database/base/base-tree.entity';
 
 /**
  * DemoTree 实体类

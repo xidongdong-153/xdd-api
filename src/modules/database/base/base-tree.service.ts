@@ -1,9 +1,11 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { EntityManager, FilterQuery, QueryOrder } from '@mikro-orm/mysql';
 import { Collection, EntityClass, QueryOrderMap } from '@mikro-orm/core';
-import { BaseService } from './base.service';
-import { BaseTreeEntity } from '@/modules/database/base/base-tree.entity';
+import { EntityManager, FilterQuery, QueryOrder } from '@mikro-orm/mysql';
+import { Injectable, BadRequestException } from '@nestjs/common';
+
 import { TreeNodeData } from '@/modules/core/types';
+import { BaseTreeEntity } from '@/modules/database/base/base-tree.entity';
+
+import { BaseService } from './base.service';
 
 @Injectable()
 export abstract class BaseTreeService<T extends BaseTreeEntity<T>> extends BaseService<T> {

@@ -1,7 +1,8 @@
+import { join } from 'path';
+
 import { WinstonModuleOptions } from 'nest-winston';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
-import { join } from 'path';
 
 // 自定义控制台日志格式
 const consoleFormat = winston.format.printf((info) => {

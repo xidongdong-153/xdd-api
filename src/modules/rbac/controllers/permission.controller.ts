@@ -10,9 +10,10 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import { PermissionService } from '../services/permission.service';
-import { CreatePermissionDto, UpdatePermissionDto, QueryPermissionDto } from '../dtos/rbac.dto';
+
 import { RequirePermissions } from '../decorators/requires-permissions.decorator';
+import { CreatePermissionDto, UpdatePermissionDto, QueryPermissionDto } from '../dtos/rbac.dto';
+import { PermissionService } from '../services/permission.service';
 
 @Controller('permissions')
 @ApiTags('权限管理')

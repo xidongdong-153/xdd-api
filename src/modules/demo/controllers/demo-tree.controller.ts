@@ -10,17 +10,18 @@ import {
     SerializeOptions,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { DemoTreeService } from '@/modules/demo/services/demo-tree.service';
+
+import { Public } from '@/modules/auth/decorators/public.decorator';
+import { TreeNodeData } from '@/modules/core/types';
 import { CreateDemoTreeDto, UpdateDemoTreeDto } from '@/modules/demo/dtos/demo.dto';
 import { DemoTree } from '@/modules/demo/entities/demo-tree.entity';
-import { TreeNodeData } from '@/modules/core/types';
-import { Public } from '@/modules/auth/decorators/public.decorator';
+import { DemoTreeService } from '@/modules/demo/services/demo-tree.service';
 
 @ApiTags('基础树形结构演示')
 @Public()
 @Controller('demo-tree')
 export class DemoTreeController {
-    constructor(private readonly demoTreeService: DemoTreeService) { }
+    constructor(private readonly demoTreeService: DemoTreeService) {}
 
     /**
      * 获取树形结构

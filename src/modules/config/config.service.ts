@@ -1,7 +1,9 @@
+import { Injectable, Logger } from '@nestjs/common';
+
+import { ConfigService as NestConfigService } from '@nestjs/config';
+
 import { AppConfig } from '@/config/interfaces/app-config.interface';
 import { DatabaseConfig, JwtConfig, LoggerConfig } from '@/config/interfaces/config.interface';
-import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService as NestConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ConfigService {

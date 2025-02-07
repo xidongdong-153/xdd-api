@@ -1,8 +1,9 @@
-import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
-import { PaginateOptions } from '@/modules/database/types';
 import { Transform } from 'class-transformer';
 import { IsNumber, IsOptional, Min } from 'class-validator';
 import { toNumber } from 'lodash';
+
+import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
+import { PaginateOptions } from '@/modules/database/types';
 
 @DtoValidation({ type: 'query' })
 export class PaginateDto implements PaginateOptions {

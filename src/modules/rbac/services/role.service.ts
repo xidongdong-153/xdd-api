@@ -1,9 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
-import { Role } from '../entities/role.entity';
-import { Permission } from '../entities/permission.entity';
+import { Injectable, NotFoundException } from '@nestjs/common';
+
 import { BaseService } from '@/modules/database/base/base.service';
+
 import { CreateRoleDto, UpdateRoleDto, QueryRoleDto, AssignPermissionsDto } from '../dtos/rbac.dto';
+import { Permission } from '../entities/permission.entity';
+import { Role } from '../entities/role.entity';
 
 @Injectable()
 export class RoleService extends BaseService<Role> {

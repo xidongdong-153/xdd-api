@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
 import { EntityManager, FilterQuery } from '@mikro-orm/mysql';
-import { Demo } from '@/modules/demo/entities/demo.entity';
-import { CreateDemoDto, UpdateDemoDto, PageDemoDto } from '@/modules/demo/dtos/demo.dto';
+import { Injectable } from '@nestjs/common';
+
 import { BaseService } from '@/modules/database/base/base.service';
 import { PaginateReturn } from '@/modules/database/types';
+import { CreateDemoDto, UpdateDemoDto, PageDemoDto } from '@/modules/demo/dtos/demo.dto';
+import { Demo } from '@/modules/demo/entities/demo.entity';
 
 @Injectable()
 export class DemoService extends BaseService<Demo> {

@@ -10,9 +10,10 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import { RoleService } from '../services/role.service';
-import { CreateRoleDto, UpdateRoleDto, QueryRoleDto, AssignPermissionsDto } from '../dtos/rbac.dto';
+
 import { RequirePermissions } from '../decorators/requires-permissions.decorator';
+import { CreateRoleDto, UpdateRoleDto, QueryRoleDto, AssignPermissionsDto } from '../dtos/rbac.dto';
+import { RoleService } from '../services/role.service';
 
 @Controller('roles')
 @ApiTags('角色管理')

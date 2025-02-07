@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { User } from './entities/user.entity';
+import { Module } from '@nestjs/common';
+
 import { UserController } from './controllers/user.controller';
+import { User } from './entities/user.entity';
 import { UserService } from './services/user.service';
 
 @Module({

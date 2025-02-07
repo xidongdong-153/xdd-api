@@ -10,9 +10,11 @@ import {
     Query,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import { UserService } from '../services/user.service';
-import { CreateUserDto, UpdateUserDto, QueryUserDto, ChangePasswordDto } from '../dtos/user.dto';
+
 import { RequirePermissions } from '@/modules/rbac/decorators/requires-permissions.decorator';
+
+import { CreateUserDto, UpdateUserDto, QueryUserDto, ChangePasswordDto } from '../dtos/user.dto';
+import { UserService } from '../services/user.service';
 
 @Controller('users')
 @ApiTags('用户管理')

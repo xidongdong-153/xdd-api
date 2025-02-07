@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { Role } from './entities/role.entity';
+import { Module } from '@nestjs/common';
+
+import { PermissionController } from './controllers/permission.controller';
+import { RoleController } from './controllers/role.controller';
 import { Permission } from './entities/permission.entity';
-import { RoleService } from './services/role.service';
+import { Role } from './entities/role.entity';
+import { PermissionGuard } from './guards/permission.guard';
 import { PermissionService } from './services/permission.service';
 import { RBACService } from './services/rbac.service';
-import { RoleController } from './controllers/role.controller';
-import { PermissionController } from './controllers/permission.controller';
-import { PermissionGuard } from './guards/permission.guard';
+import { RoleService } from './services/role.service';
 
 @Module({
     imports: [MikroOrmModule.forFeature([Role, Permission])],

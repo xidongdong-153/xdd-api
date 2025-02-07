@@ -1,11 +1,14 @@
+import { EntityManager } from '@mikro-orm/core';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { EntityManager } from '@mikro-orm/core';
-import { User } from '@/modules/user/entities/user.entity';
-import { UserStatus } from '@/modules/user/constants/user.enum';
-import { LoginDto, RegisterDto, RefreshTokenDto } from '../dtos/auth.dto';
+
 import * as argon2 from 'argon2';
+
 import { ConfigService } from '@/modules/config/config.service';
+import { UserStatus } from '@/modules/user/constants/user.enum';
+import { User } from '@/modules/user/entities/user.entity';
+
+import { LoginDto, RegisterDto, RefreshTokenDto } from '../dtos/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +16,7 @@ export class AuthService {
         private readonly em: EntityManager,
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
-    ) { }
+    ) {}
 
     async validateUser(credential: string, password: string): Promise<User> {
         const user = await this.em.findOne(User, [{ username: credential }, { email: credential }]);

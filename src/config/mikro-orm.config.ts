@@ -1,12 +1,14 @@
-import { defineConfig } from '@mikro-orm/mysql';
-import { Migrator } from '@mikro-orm/migrations';
 import { LoadStrategy } from '@mikro-orm/core';
-import { LoggerService } from '@nestjs/common';
-import { WinstonModule } from 'nest-winston';
-import { loggerConfig } from './logger.config';
-// import stripAnsi from 'strip-ansi';
 import { Highlighter } from '@mikro-orm/core';
+import { Migrator } from '@mikro-orm/migrations';
+import { defineConfig } from '@mikro-orm/mysql';
+import { LoggerService } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { WinstonModule } from 'nest-winston';
+
+import { loggerConfig } from './logger.config';
+
+// import stripAnsi from 'strip-ansi';
 
 // 创建一个 Winston logger 实例
 const logger: LoggerService = WinstonModule.createLogger(loggerConfig);

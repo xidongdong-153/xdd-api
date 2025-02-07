@@ -1,6 +1,7 @@
 import { SetMetadata } from '@nestjs/common';
-import { ValidatorOptions } from 'class-validator';
 import { ClassTransformOptions } from 'class-transformer';
+import { ValidatorOptions } from 'class-validator';
+
 import { DTO_VALIDATION_OPTIONS } from '@/modules/core/constants';
 
 /**

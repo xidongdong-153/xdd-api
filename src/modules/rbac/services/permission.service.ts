@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
-import { Permission } from '../entities/permission.entity';
+import { Injectable } from '@nestjs/common';
+
 import { BaseService } from '@/modules/database/base/base.service';
+
 import { CreatePermissionDto, UpdatePermissionDto, QueryPermissionDto } from '../dtos/rbac.dto';
+import { Permission } from '../entities/permission.entity';
 
 @Injectable()
 export class PermissionService extends BaseService<Permission> {

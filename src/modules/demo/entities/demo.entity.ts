@@ -1,6 +1,7 @@
-import { BaseEntity } from '@/modules/database/base/base.entity';
 import { Entity, Property } from '@mikro-orm/core';
 import { Exclude, Expose } from 'class-transformer';
+
+import { BaseEntity } from '@/modules/database/base/base.entity';
 
 /**
  * Demo 实体类

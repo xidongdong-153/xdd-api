@@ -1,8 +1,10 @@
 import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import { AuthService } from '../services/auth.service';
-import { LoginDto, RegisterDto, RefreshTokenDto } from '../dtos/auth.dto';
+
 import { Public } from '@/modules/auth/decorators/public.decorator';
+
+import { LoginDto, RegisterDto, RefreshTokenDto } from '../dtos/auth.dto';
+import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
 @ApiTags('认证')

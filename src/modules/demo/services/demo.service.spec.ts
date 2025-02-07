@@ -1,7 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { EntityManager } from '@mikro-orm/mysql';
-import { Demo } from '@/modules/demo/entities/demo.entity';
 import { NotFoundException } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+
+import { Demo } from '@/modules/demo/entities/demo.entity';
+
 import { DemoService } from '@/modules/demo/services/demo.service';
 
 describe('DemoService', () => {

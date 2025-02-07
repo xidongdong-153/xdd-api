@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Inject } from '@nestjs/common';
 import { Logger } from 'winston';
 
 @Injectable()

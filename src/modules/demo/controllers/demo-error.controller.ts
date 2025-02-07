@@ -1,7 +1,8 @@
 import { Controller, Get, SerializeOptions } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { DemoErrorService } from '@/modules/demo/services/demo-error.service';
+
 import { Public } from '@/modules/auth/decorators/public.decorator';
+import { DemoErrorService } from '@/modules/demo/services/demo-error.service';
 
 /**
  * Demo错误演示控制器
@@ -11,7 +12,7 @@ import { Public } from '@/modules/auth/decorators/public.decorator';
 @Public()
 @Controller('demo-error')
 export class DemoErrorController {
-    constructor(private readonly demoErrorService: DemoErrorService) { }
+    constructor(private readonly demoErrorService: DemoErrorService) {}
 
     /**
      * 测试表不存在错误

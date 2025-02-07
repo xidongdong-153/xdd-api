@@ -1,7 +1,9 @@
-import { IsString, IsNotEmpty, IsOptional, IsArray, IsNumber } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
 import { PartialType } from '@nestjs/mapped-types';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, IsOptional, IsArray, IsNumber } from 'class-validator';
+
+import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
+
 import { PaginateDto } from '@/modules/restful/dtos/paginate.dto';
 
 /**

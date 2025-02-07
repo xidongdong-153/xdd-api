@@ -11,11 +11,12 @@ import {
     SerializeOptions,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { DemoService } from '@/modules/demo/services/demo.service';
+
+import { Public } from '@/modules/auth/decorators/public.decorator';
 import { CreateDemoDto, UpdateDemoDto, PageDemoDto } from '@/modules/demo/dtos/demo.dto';
 import { Demo } from '@/modules/demo/entities/demo.entity';
+import { DemoService } from '@/modules/demo/services/demo.service';
 import { LoggerService } from '@/modules/logger/services/logger.service';
-import { Public } from '@/modules/auth/decorators/public.decorator';
 
 /**
  * Demo 控制器
@@ -28,7 +29,7 @@ export class DemoController {
     constructor(
         private readonly demoService: DemoService,
         private readonly logger: LoggerService,
-    ) { }
+    ) {}
 
     /**
      * 创建演示数据
