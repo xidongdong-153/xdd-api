@@ -22,6 +22,3 @@ RUN pnpm build
 
 # 暴露端口
 EXPOSE 3100
-
-# 启动应用
-CMD ["pnpm", "start:prod"] 

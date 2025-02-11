@@ -43,6 +43,8 @@ services:
       - app-network
     depends_on:
       - db
+    command: >
+      sh -c "pnpm schema:create || true && pnpm start:prod"
 
   db:
     image: mysql:8.0

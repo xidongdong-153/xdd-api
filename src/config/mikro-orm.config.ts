@@ -46,7 +46,6 @@ const cliConfig = defineConfig({
     driverOptions: {
         connection: {
             timezone: process.env.DB_TIMEZONE,
-            charset: 'utf8mb4_general_ci',
         },
     },
 });

@@ -21,18 +21,51 @@ services:
         soft: 20000
         hard: 40000
 
-  adminer:
-    image: adminer:latest
-    container_name: xdd-adminer-dev
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: xdd-phpmyadmin
     restart: always
     ports:
-      - '3006:8080'
+      - '${PMA_PORT:-8080}:80'
     environment:
-      ADMINER_DEFAULT_SERVER: db
+      # 基础配置
+      PMA_HOSTS: db  # 指定可用的数据库服务器
+      PMA_VERBOSE: MySQL  # 显示的服务器名称
+      PMA_ABSOLUTE_URI: ${PMA_ABSOLUTE_URI:-}  # 外部访问URL
+      
+      # 安全配置
+      UPLOAD_LIMIT: ${PMA_UPLOAD_LIMIT:-300M}  # 上传文件大小限制
+      MAX_EXECUTION_TIME: ${PMA_MAX_EXECUTION_TIME:-600}  # 最大执行时间
+      MEMORY_LIMIT: ${PMA_MEMORY_LIMIT:-512M}  # 内存限制
+      
+      # 登录安全
+      ALLOW_NO_PASSWORD: "false"  # 禁止无密码登录
+      ALLOW_ROOT_LOGIN: ${PMA_ALLOW_ROOT_LOGIN:-true}  # 是否允许root登录
+      HIDE_PHP_VERSION: ${PMA_HIDE_PHP_VERSION:-true}  # 隐藏PHP版本
+      
+      # UI配置
+      PMA_ARBITRARY: ${PMA_ARBITRARY:-0}  # 是否允许任意服务器连接
+      PMA_LANG: ${PMA_LANG:-zh_CN}  # 默认语言
+      PMA_THEME: ${PMA_THEME:-original}  # 默认主题
+      
+    volumes:
+      - phpmyadmin_sessions:/sessions  # 会话持久化
+      - phpmyadmin_config:/etc/phpmyadmin/config.user.inc.php  # 自定义配置持久化
     networks:
       - app-network
     depends_on:
       - db
+    healthcheck:  # 健康检查
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:  # 日志配置
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   app-network:
@@ -40,3 +73,5 @@ networks:
 
 volumes:
   mysql_data_dev: {} 
+  phpmyadmin_sessions: {}  # phpMyAdmin 会话持久化
+  phpmyadmin_config: {}    # phpMyAdmin 配置持久化 
