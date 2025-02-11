@@ -13,17 +13,17 @@ services:
       - '${PORT:-3100}:${PORT:-3100}'
     environment:
       # 应用配置
-      - NODE_ENV=production  # 固定为生产环境
+      - NODE_ENV=production
       - APP_NAME=${APP_NAME:-xdd-api}
       - PORT=${PORT:-3100}
       - API_PREFIX=${API_PREFIX:-api}
       - API_VERSION=${API_VERSION:-v1}
       
       # 数据库配置
-      - DB_HOST=db  # 固定使用 docker 服务名
+      - DB_HOST=db
       - DB_PORT=${DB_PORT:-3306}
       - DB_USERNAME=${DB_USERNAME:-xdd_user}
-      - DB_PASSWORD=${DB_PASSWORD}  # 必须配置
+      - DB_PASSWORD=${DB_PASSWORD} 
       - DB_DATABASE=${DB_DATABASE:-xdd-api}
       - DB_TIMEZONE=${DB_TIMEZONE:-+08:00}
       
@@ -34,8 +34,8 @@ services:
       - LOG_MAX_SIZE=${LOG_MAX_SIZE:-20m}
       
       # JWT配置
-      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}  # 必须配置
-      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}  # 必须配置
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}  
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET} 
       - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-7d}
     volumes:
       - ../logs:/usr/src/app/logs
@@ -49,16 +49,14 @@ services:
     container_name: xdd-mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  # 使用相同的密码
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  
       MYSQL_DATABASE: ${DB_DATABASE:-xdd-api}
       MYSQL_USER: ${DB_USERNAME:-xdd_user}
-      MYSQL_PASSWORD: ${DB_PASSWORD}  # 使用相同的密码
+      MYSQL_PASSWORD: ${DB_PASSWORD}  
     ports:
       - '${DB_PORT:-3306}:3306'
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro  # 初始化SQL
-      - ./mysql/conf.d:/etc/mysql/conf.d:ro  # MySQL配置
     networks:
       - app-network
     ulimits:
@@ -78,7 +76,7 @@ services:
       - '${ADMINER_PORT:-3006}:8080'
     environment:
       ADMINER_DEFAULT_SERVER: db
-      ADMINER_DESIGN: nette  # 使用更现代的主题
+      ADMINER_DESIGN: nette
     networks:
       - app-network
     depends_on:

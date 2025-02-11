@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: xdd-mysql-dev
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: xdd123456
+      MYSQL_DATABASE: xdd-api
+      MYSQL_USER: xdd_user
+      MYSQL_PASSWORD: xdd123456
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data_dev:/var/lib/mysql
+    networks:
+      - app-network
+    ulimits:
+      nofile:
+        soft: 20000
+        hard: 40000
+
+  adminer:
+    image: adminer:latest
+    container_name: xdd-adminer-dev
+    restart: always
+    ports:
+      - '3006:8080'
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data_dev: {} 

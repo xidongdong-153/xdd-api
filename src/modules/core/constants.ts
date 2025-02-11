@@ -84,7 +84,7 @@ export const ResponseMessages = {
 } as const;
 
 // 异常映射配置
-export const ExceptionMappings: ExceptionMapping[] = [
+export const ExceptionMappings: ReadonlyArray<ExceptionMapping> = [
     {
         class: NotFoundError,
         status: HttpStatus.NOT_FOUND,

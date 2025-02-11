@@ -18,38 +18,50 @@ const noColorHighlighter: Highlighter = {
     highlight: (text: string) => text,
 };
 
+const baseConfig = defineConfig({
+    entities: ['dist/**/*.entity.js'],
+    entitiesTs: ['src/**/*.entity.ts'],
+    loadStrategy: LoadStrategy.JOINED,
+    extensions: [Migrator],
+    migrations: {
+        path: 'dist/migrations',
+        pathTs: 'src/migrations',
+    },
+    debug: process.env.NODE_ENV === 'development' ? ['discovery', 'info', 'query'] : false,
+    logger: (message: string) => {
+        const cleanMessage = message;
+        logger.log(cleanMessage, 'MikroORM');
+    },
+    highlighter: noColorHighlighter,
+});
+
+// CLI 配置（直接使用环境变量）
+const cliConfig = defineConfig({
+    ...baseConfig,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    dbName: process.env.DB_DATABASE,
+    driverOptions: {
+        connection: {
+            timezone: process.env.DB_TIMEZONE,
+            charset: 'utf8mb4_general_ci',
+        },
+    },
+});
+
 export const mikroOrmConfig = () => {
     const configService = new ConfigService();
 
     return defineConfig({
+        ...baseConfig,
         host: configService.get<string>('DB_HOST'),
         port: configService.get<number>('DB_PORT'),
         user: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         dbName: configService.get<string>('DB_DATABASE'),
-        entities: ['dist/**/*.entity.js'],
-        entitiesTs: ['src/**/*.entity.ts'],
-        loadStrategy: LoadStrategy.JOINED,
-        extensions: [Migrator],
-        migrations: {
-            path: 'dist/migrations',
-            pathTs: 'src/migrations',
-        },
-        driverOptions: {
-            connection: {
-                timezone: configService.get<string>('DB_TIMEZONE'),
-                charset: 'utf8mb4_general_ci',
-            },
-        },
-        debug: process.env.NODE_ENV === 'development' ? ['discovery', 'info', 'query'] : false,
-        logger: (message: string) => {
-            // 移除 ANSI 颜色代码
-            const cleanMessage = message;
-            logger.log(cleanMessage, 'MikroORM');
-        },
-        // 使用无颜色的 highlighter
-        highlighter: noColorHighlighter,
     });
 };
 
-export default mikroOrmConfig();
+export default cliConfig;

@@ -1,5 +1,5 @@
-# 使用官方 Node.js 22.12.0 作为基础镜像
-FROM node:22.12.0
+# 使用官方 Node.js LTS 作为基础镜像
+FROM node:lts
 
 # 设置工作目录
 WORKDIR /usr/src/app
