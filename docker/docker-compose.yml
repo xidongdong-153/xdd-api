@@ -44,7 +44,18 @@ services:
     depends_on:
       - db
     command: >
-      sh -c "pnpm schema:create || true && pnpm start:prod"
+      sh -c '
+        echo "检查数据库表是否存在..." &&
+        tables_count=$(mysql -h db -u"${DB_USERNAME}" -p"${DB_PASSWORD}" "${DB_DATABASE}" -N -e "show tables;" | wc -l) &&
+        if [ "$tables_count" -eq 0 ]; then
+          echo "数据库为空，执行创建操作..." &&
+          pnpm schema:prod:create
+        else
+          echo "数据库已存在表，执行更新操作..." &&
+          pnpm schema:prod:update
+        fi &&
+        pnpm start:prod
+      '
 
   db:
     image: mysql:8.0
