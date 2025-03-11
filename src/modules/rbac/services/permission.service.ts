@@ -3,7 +3,11 @@ import { Injectable } from '@nestjs/common';
 
 import { BaseService } from '@/modules/database/base/base.service';
 
-import { CreatePermissionDto, UpdatePermissionDto, QueryPermissionDto } from '../dtos/rbac.dto';
+import {
+    CreatePermissionDto,
+    UpdatePermissionDto,
+    QueryPermissionDto,
+} from '../dtos/permission.dto';
 import { Permission } from '../entities/permission.entity';
 
 @Injectable()
@@ -48,6 +52,12 @@ export class PermissionService extends BaseService<Permission> {
             where.module = query.module;
         }
 
-        return this.list(where);
+        const { page, limit } = query;
+        return this.paginate({
+            page,
+            limit,
+            where,
+            populate: ['roles'],
+        });
     }
 }

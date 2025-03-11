@@ -60,11 +60,54 @@ export class LoggerService {
     }
 
     error(message: string, context?: string, error?: Error, metadata?: LogMetadata) {
+        // 增强错误日志，确保捕获所有可能的错误信息
+        const errorMetadata = error
+            ? {
+                  error: {
+                      message: error.message,
+                      name: error.name,
+                      stack: error.stack,
+                  },
+                  ...metadata,
+              }
+            : metadata;
+
         this.logWithMetadata(
             'error',
             message,
             context,
-            metadata,
+            errorMetadata,
+            error?.stack || new Error().stack,
+        );
+    }
+
+    /**
+     * 记录严重错误（如堆栈溢出）
+     */
+    fatal(message: string, context?: string, error?: Error, metadata?: LogMetadata) {
+        // 记录严重错误，并尝试收集尽可能多的上下文信息
+        console.error(`FATAL ERROR: ${message}`, error);
+
+        const errorMetadata = error
+            ? {
+                  error: {
+                      message: error.message,
+                      name: error.name,
+                      stack: error.stack,
+                  },
+                  severity: 'FATAL',
+                  ...metadata,
+              }
+            : {
+                  severity: 'FATAL',
+                  ...metadata,
+              };
+
+        this.logWithMetadata(
+            'error',
+            `FATAL: ${message}`,
+            context,
+            errorMetadata,
             error?.stack || new Error().stack,
         );
     }
@@ -104,6 +147,12 @@ export class LoggerService {
      * 记录API请求错误
      */
     logRequestError(context: string, metadata: HttpLogMetadata, error: Error) {
-        this.error(`Request failed: ${metadata.method} ${metadata.url}`, context, error, metadata);
+        this.error(`Request failed: ${metadata.method} ${metadata.url}`, context, error, {
+            ...metadata,
+            errorDetails: {
+                message: error.message,
+                name: error.name,
+            },
+        });
     }
 }

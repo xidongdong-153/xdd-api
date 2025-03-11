@@ -46,7 +46,40 @@ export class LoggerMiddleware implements NestMiddleware {
             }
         });
 
-        next();
+        // 错误处理
+        res.on('error', (error: Error) => {
+            this.logger.error('Response Error', {
+                error: {
+                    message: error.message,
+                    name: error.name,
+                    stack: error.stack,
+                },
+                method: req.method,
+                url: req.originalUrl || req.url,
+                timestamp: new Date().toISOString(),
+            });
+        });
+
+        // 为了捕获堆栈溢出等异常，添加域处理
+        try {
+            next();
+        } catch (error: unknown) {
+            // 直接捕获中间件内的错误
+            const err = error as Error;
+            this.logger.error('Middleware Error', {
+                error: {
+                    message: err.message,
+                    name: err.name,
+                    stack: err.stack,
+                },
+                method: req.method,
+                url: req.originalUrl || req.url,
+                timestamp: new Date().toISOString(),
+            });
+
+            // 继续抛出错误，让全局异常过滤器处理
+            throw error;
+        }
     }
 
     /**

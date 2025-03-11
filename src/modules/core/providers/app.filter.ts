@@ -1,6 +1,8 @@
 import { Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { isObject } from 'class-validator';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 
 import { ErrorResponse } from '@/modules/core/types';
 
@@ -14,6 +16,13 @@ import { ResponseMessages, ExceptionMappings } from '../constants';
 export class AppFilter<T = Error> extends BaseExceptionFilter<T> {
     protected readonly exceptionMappings = ExceptionMappings;
 
+    constructor(
+        @Inject(WINSTON_MODULE_PROVIDER)
+        private readonly logger: Logger,
+    ) {
+        super();
+    }
+
     catch(exception: T, host: ArgumentsHost) {
         const applicationRef =
             this.applicationRef || (this.httpAdapterHost && this.httpAdapterHost.httpAdapter)!;
@@ -21,6 +30,9 @@ export class AppFilter<T = Error> extends BaseExceptionFilter<T> {
         const ctx = host.switchToHttp();
         const request = ctx.getRequest();
         const timestamp = new Date().toISOString();
+
+        // 记录详细错误信息到日志
+        this.logException(exception, request);
 
         // 处理 HTTP 异常
         if (exception instanceof HttpException) {
@@ -57,6 +69,45 @@ export class AppFilter<T = Error> extends BaseExceptionFilter<T> {
 
         // 处理未知异常
         return this.handleUnknownError(exception, host, applicationRef);
+    }
+
+    /**
+     * 记录异常详细信息到日志
+     */
+    private logException(exception: T, request: any): void {
+        const context = 'ExceptionFilter';
+        const errorObj = exception as Error;
+
+        this.logger.error(
+            `Uncaught exception: ${errorObj.message}`,
+            {
+                name: errorObj.name,
+                stack: errorObj.stack,
+                path: request.url,
+                method: request.method,
+                query: request.query,
+                params: request.params,
+                body: this.sanitizeBody(request.body),
+            },
+            context,
+        );
+    }
+
+    /**
+     * 清理请求体中的敏感信息
+     */
+    private sanitizeBody(body: any): any {
+        if (!body) return body;
+        const sanitized = { ...body };
+        const sensitiveFields = ['password', 'token', 'secret', 'authorization'];
+
+        sensitiveFields.forEach((field) => {
+            if (field in sanitized) {
+                sanitized[field] = '******';
+            }
+        });
+
+        return sanitized;
     }
 
     /**

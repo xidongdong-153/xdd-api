@@ -1,4 +1,4 @@
-import { Body, Controller, Post, HttpCode, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, SerializeOptions } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { Public } from '@/modules/auth/decorators/public.decorator';
@@ -15,6 +15,7 @@ export class AuthController {
     @Public()
     @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: '用户登录', description: '使用用户名/邮箱和密码登录' })
+    @SerializeOptions({ groups: ['user-detail'] })
     login(@Body() dto: LoginDto) {
         return this.authService.login(dto);
     }
@@ -22,6 +23,7 @@ export class AuthController {
     @Post('register')
     @Public()
     @ApiOperation({ summary: '用户注册', description: '创建新用户并返回token' })
+    @SerializeOptions({ groups: ['user-detail'] })
     register(@Body() dto: RegisterDto) {
         return this.authService.register(dto);
     }

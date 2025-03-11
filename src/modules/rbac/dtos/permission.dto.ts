@@ -7,61 +7,6 @@ import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorato
 import { PaginateDto } from '@/modules/restful/dtos/paginate.dto';
 
 /**
- * 创建角色数据传输对象
- */
-@DtoValidation({ groups: ['create'] })
-export class CreateRoleDto {
-    /**
-     * 角色名称
-     * @example "admin"
-     */
-    @ApiProperty({ description: '角色名称' })
-    @IsString({ message: '角色名称必须是字符串', groups: ['create'] })
-    @IsNotEmpty({ message: '角色名称不能为空', groups: ['create'] })
-    name!: string;
-
-    /**
-     * 角色描述
-     * @example "系统管理员"
-     */
-    @ApiPropertyOptional({ description: '角色描述' })
-    @IsString({ message: '角色描述必须是字符串', groups: ['create'] })
-    @IsOptional({ groups: ['create'] })
-    description?: string;
-
-    /**
-     * 权限ID列表
-     * @example [1, 2, 3]
-     */
-    @ApiPropertyOptional({ description: '权限ID列表', type: [Number] })
-    @IsArray({ message: '权限必须是数组', groups: ['create'] })
-    @IsNumber({}, { each: true, message: '权限ID必须是数字', groups: ['create'] })
-    @IsOptional({ groups: ['create'] })
-    permissions?: number[];
-}
-
-/**
- * 更新角色数据传输对象
- */
-@DtoValidation({ groups: ['update'] })
-export class UpdateRoleDto extends PartialType(CreateRoleDto) {}
-
-/**
- * 角色查询数据传输对象
- */
-@DtoValidation({ type: 'query' })
-export class QueryRoleDto extends PaginateDto {
-    /**
-     * 角色名称
-     * @example "admin"
-     */
-    @ApiPropertyOptional({ description: '角色名称' })
-    @IsString({ message: '角色名称必须是字符串' })
-    @IsOptional()
-    name?: string;
-}
-
-/**
  * 创建权限数据传输对象
  */
 @DtoValidation({ groups: ['create'] })

@@ -1,8 +1,15 @@
-import { EntityManager, FilterQuery, FindOptions, EntityClass } from '@mikro-orm/core';
+import {
+    EntityManager,
+    FilterQuery,
+    FindOptions,
+    EntityClass,
+    Populate,
+    AnyEntity,
+} from '@mikro-orm/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { BaseEntity } from '@/modules/database/base/base.entity';
-import { PaginateOptions, PaginateReturn, PaginateMeta } from '@/modules/database/types';
+// import { BaseEntity } from '@/modules/database/base/base.entity';
+import { PaginateReturn } from '../types';
 
 /**
  * 基础服务类
@@ -10,7 +17,7 @@ import { PaginateOptions, PaginateReturn, PaginateMeta } from '@/modules/databas
  * @template T - Entity类型，必须继承自BaseEntity
  */
 @Injectable()
-export abstract class BaseService<T extends BaseEntity> {
+export abstract class BaseService<T extends AnyEntity> {
     constructor(
         protected readonly em: EntityManager,
         protected entity: EntityClass<T>,
@@ -29,20 +36,23 @@ export abstract class BaseService<T extends BaseEntity> {
      * 获取分页数据
      * @param options 分页选项
      */
-    async paginate(
-        options: PaginateOptions & { where?: FilterQuery<T> },
-    ): Promise<PaginateReturn<T>> {
-        const { page = 1, limit = 10, where = {}, ...filter } = options;
+    async paginate<Hint extends string = never>(options: {
+        page?: number;
+        limit?: number;
+        where?: FilterQuery<T>;
+        populate?: Populate<T, Hint>;
+    }): Promise<PaginateReturn<T>> {
+        const { page = 1, limit = 10, where = {}, populate, ...filter } = options;
         const offset = (page - 1) * limit;
 
         const [items, totalItems] = await this.em.findAndCount(
             this.entity,
             { ...where, ...filter },
-            { limit, offset },
+            { limit, offset, populate },
         );
         const totalPages = Math.ceil(totalItems / limit);
 
-        const meta: PaginateMeta = {
+        const meta = {
             itemCount: items.length,
             totalItems,
             perPage: limit,
@@ -56,9 +66,13 @@ export abstract class BaseService<T extends BaseEntity> {
     /**
      * 获取详情
      * @param id 记录ID
+     * @param populate 填充选项
      */
-    async detail(id: number): Promise<T> {
-        const entity = await this.em.findOne(this.entity, { id } as FilterQuery<T>);
+    async detail<Hint extends string = never>(
+        id: number,
+        populate?: Populate<T, Hint>,
+    ): Promise<T> {
+        const entity = await this.em.findOne(this.entity, { id } as FilterQuery<T>, { populate });
         if (!entity) {
             throw new NotFoundException(`Entity with ID ${id} not found`);
         }

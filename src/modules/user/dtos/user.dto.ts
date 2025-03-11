@@ -8,13 +8,17 @@ import {
     IsString,
     Matches,
     MinLength,
+    MaxLength,
+    IsUrl,
+    IsArray,
+    IsNumber,
 } from 'class-validator';
 
 import { DtoValidation } from '@/modules/core/decorators/dto-validation.decorator';
 
 import { PaginateDto } from '@/modules/restful/dtos/paginate.dto';
 
-import { UserStatus } from '../constants/user.enum';
+import { UserStatus } from '../entities/user.entity';
 
 /**
  * 创建用户数据传输对象
@@ -28,7 +32,19 @@ export class CreateUserDto {
     @ApiProperty({ description: '用户名' })
     @IsString({ message: '用户名必须是字符串', groups: ['create'] })
     @IsNotEmpty({ message: '用户名不能为空', groups: ['create'] })
+    @MinLength(3, { message: '用户名长度不能小于3个字符', groups: ['create'] })
+    @MaxLength(50, { message: '用户名长度不能超过50个字符', groups: ['create'] })
     username!: string;
+
+    /**
+     * 昵称
+     * @example "管理员"
+     */
+    @ApiProperty({ description: '昵称' })
+    @IsString({ message: '昵称必须是字符串', groups: ['create'] })
+    @IsNotEmpty({ message: '昵称不能为空', groups: ['create'] })
+    @MaxLength(50, { message: '昵称长度不能超过50个字符', groups: ['create'] })
+    nickname!: string;
 
     /**
      * 密码
@@ -44,6 +60,16 @@ export class CreateUserDto {
     password!: string;
 
     /**
+     * 头像URL
+     * @example "https://example.com/avatar.jpg"
+     */
+    @ApiPropertyOptional({ description: '头像URL' })
+    @IsOptional({ groups: ['create'] })
+    @IsUrl({}, { message: '头像URL格式不正确', groups: ['create'] })
+    @MaxLength(255, { message: '头像URL长度不能超过255个字符', groups: ['create'] })
+    avatar?: string;
+
+    /**
      * 邮箱
      * @example "admin@example.com"
      */
@@ -51,6 +77,14 @@ export class CreateUserDto {
     @IsEmail({}, { message: '邮箱格式不正确', groups: ['create'] })
     @IsNotEmpty({ message: '邮箱不能为空', groups: ['create'] })
     email!: string;
+
+    /**
+     * 手机号码
+     * @example "+8613800138000"
+     */
+    @ApiPropertyOptional({ description: '手机号码' })
+    @IsOptional({ groups: ['create'] })
+    phoneNumber?: string;
 }
 
 /**
@@ -127,4 +161,20 @@ export class ChangePasswordDto {
         groups: ['change-password'],
     })
     newPassword!: string;
+}
+
+/**
+ * 分配角色数据传输对象
+ */
+@DtoValidation({ groups: ['assign'] })
+export class AssignRolesDto {
+    /**
+     * 角色ID列表
+     * @example [1, 2, 3]
+     */
+    @ApiProperty({ description: '角色ID列表', type: [Number] })
+    @IsArray({ message: '角色必须是数组', groups: ['assign'] })
+    @IsNumber({}, { each: true, message: '角色ID必须是数字', groups: ['assign'] })
+    @IsNotEmpty({ message: '角色ID列表不能为空', groups: ['assign'] })
+    roles!: number[];
 }

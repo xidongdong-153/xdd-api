@@ -8,11 +8,15 @@ import {
     Patch,
     Post,
     Query,
+    SerializeOptions,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
+import { QueryUserDto } from '@/modules/user/dtos/user.dto';
+
 import { RequirePermissions } from '../decorators/requires-permissions.decorator';
-import { CreateRoleDto, UpdateRoleDto, QueryRoleDto, AssignPermissionsDto } from '../dtos/rbac.dto';
+import { AssignPermissionsDto } from '../dtos/permission.dto';
+import { CreateRoleDto, UpdateRoleDto, QueryRoleDto, AssignUsersDto } from '../dtos/role.dto';
 import { RoleService } from '../services/role.service';
 
 @Controller('roles')
@@ -38,6 +42,7 @@ export class RoleController {
     @Get(':id')
     @RequirePermissions('role:read')
     @ApiOperation({ summary: '查询角色详情', description: '根据ID查询角色详情' })
+    @SerializeOptions({ groups: ['role-detail'] })
     findOne(@Param('id', ParseIntPipe) id: number) {
         return this.roleService.detail(id);
     }
@@ -61,5 +66,27 @@ export class RoleController {
     @ApiOperation({ summary: '分配权限', description: '为指定角色分配权限' })
     assignPermissions(@Param('id', ParseIntPipe) id: number, @Body() dto: AssignPermissionsDto) {
         return this.roleService.assignPermissions(id, dto);
+    }
+
+    @Get(':id/users')
+    @RequirePermissions('role:read')
+    @ApiOperation({ summary: '获取角色用户', description: '获取指定角色下的用户列表' })
+    @SerializeOptions({ groups: ['user-list'] })
+    getRoleUsers(@Param('id', ParseIntPipe) id: number, @Query() query: QueryUserDto) {
+        return this.roleService.getRoleUsers(id, query);
+    }
+
+    @Post(':id/users')
+    @RequirePermissions('role:assign-user')
+    @ApiOperation({ summary: '添加用户', description: '为指定角色添加用户' })
+    addUsersToRole(@Param('id', ParseIntPipe) id: number, @Body() dto: AssignUsersDto) {
+        return this.roleService.addUsersToRole(id, dto.userIds);
+    }
+
+    @Delete(':id/users')
+    @RequirePermissions('role:assign-user')
+    @ApiOperation({ summary: '移除用户', description: '从指定角色中移除用户' })
+    removeUsersFromRole(@Param('id', ParseIntPipe) id: number, @Body() dto: AssignUsersDto) {
+        return this.roleService.removeUsersFromRole(id, dto.userIds);
     }
 }
