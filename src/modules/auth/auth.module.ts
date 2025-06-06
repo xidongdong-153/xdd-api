@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
+import { RBACModule } from '@/modules/rbac/rbac.module';
 import { User } from '@/modules/user/entities/user.entity';
 import { UserModule } from '@/modules/user/user.module';
 
@@ -17,6 +18,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         PassportModule,
         JwtModule.register({}),
         UserModule,
+        RBACModule,
     ],
     controllers: [AuthController],
     providers: [

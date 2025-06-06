@@ -9,6 +9,7 @@ import {
     Post,
     Query,
     SerializeOptions,
+    UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
@@ -17,11 +18,13 @@ import { QueryUserDto } from '@/modules/user/dtos/user.dto';
 import { RequirePermissions } from '../decorators/requires-permissions.decorator';
 import { AssignPermissionsDto } from '../dtos/permission.dto';
 import { CreateRoleDto, UpdateRoleDto, QueryRoleDto, AssignUsersDto } from '../dtos/role.dto';
+import { PermissionGuard } from '../guards/permission.guard';
 import { RoleService } from '../services/role.service';
 
 @Controller('roles')
 @ApiTags('角色管理')
 @ApiBearerAuth('jwt')
+@UseGuards(PermissionGuard)
 export class RoleController {
     constructor(private readonly roleService: RoleService) {}
 

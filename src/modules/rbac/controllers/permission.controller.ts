@@ -47,7 +47,7 @@ export class PermissionController {
     @ApiOperation({ summary: '查询权限详情', description: '根据ID查询权限详情' })
     @SerializeOptions({ groups: ['permission-detail'] })
     findOne(@Param('id', ParseIntPipe) id: number) {
-        return this.permissionService.detail(id);
+        return this.permissionService.detail(id, ['roles']);
     }
 
     @Patch(':id')

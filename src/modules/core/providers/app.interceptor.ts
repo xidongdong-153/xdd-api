@@ -71,23 +71,7 @@ export class AppInterceptor extends ClassSerializerInterceptor {
             return response;
         }
 
-        this.logger.debug('序列化选项:', {
-            groups: options.groups,
-            strategy: options.strategy,
-            enableCircularCheck: options.enableCircularCheck,
-            excludePrefixes: options.excludePrefixes,
-        });
-
-        this.logger.debug('序列化前的数据:', {
-            type: response.constructor?.name,
-            data: response,
-        });
-
         const result = super.serialize(response, options);
-
-        this.logger.debug('序列化后的数据:', {
-            result,
-        });
 
         return result;
     }

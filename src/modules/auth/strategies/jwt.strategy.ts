@@ -1,5 +1,5 @@
 import { EntityManager } from '@mikro-orm/core';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
@@ -14,6 +14,8 @@ interface JwtPayload {
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
+    private readonly logger = new Logger(JwtStrategy.name);
+
     constructor(
         private readonly em: EntityManager,
         configService: ConfigService,
@@ -26,7 +28,22 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: JwtPayload) {
-        const user = await this.em.findOne(User, { id: payload.sub });
+        this.logger.debug(`JWT Payload: ${JSON.stringify(payload)}`);
+
+        const user = await this.em.findOne(
+            User,
+            { id: payload.sub },
+            {
+                populate: ['roles.permissions'],
+            },
+        );
+
+        if (!user) {
+            this.logger.warn(`No user found for ID: ${payload.sub}`);
+            return null;
+        }
+
+        this.logger.debug(`User authenticated: ${user.id} (${user.username})`);
         return user;
     }
 }

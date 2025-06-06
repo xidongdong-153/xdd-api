@@ -33,7 +33,7 @@ export class Role extends BaseEntity {
     @IsNotEmpty({ message: '角色编码不能为空' })
     @IsString({ message: '角色编码必须是字符串' })
     @MaxLength(50, { message: '角色编码不能超过50个字符' })
-    @Expose({ groups: ['role-list', 'role-detail', 'user-detail'] })
+    @Expose({ groups: ['role-list', 'role-detail', 'user-detail', 'permission-detail'] })
     code!: string;
 
     /**
@@ -45,7 +45,7 @@ export class Role extends BaseEntity {
     @IsNotEmpty({ message: '角色名称不能为空' })
     @IsString({ message: '角色名称必须是字符串' })
     @MaxLength(50, { message: '角色名称不能超过50个字符' })
-    @Expose({ groups: ['role-list', 'role-detail', 'user-detail'] })
+    @Expose({ groups: ['role-list', 'role-detail', 'user-detail', 'permission-detail'] })
     name!: string;
 
     /**
@@ -57,7 +57,7 @@ export class Role extends BaseEntity {
     @IsOptional()
     @IsString({ message: '角色描述必须是字符串' })
     @MaxLength(200, { message: '角色描述不能超过200个字符' })
-    @Expose({ groups: ['role-detail', 'user-detail'] })
+    @Expose({ groups: ['role-detail', 'user-detail', 'permission-detail'] })
     description?: string;
 
     /**
@@ -67,7 +67,7 @@ export class Role extends BaseEntity {
     @Property({ nullable: true })
     @IsOptional()
     @IsString({ message: '父角色ID必须是字符串' })
-    @Expose({ groups: ['role-list', 'role-detail', 'user-detail'] })
+    @Expose({ groups: ['role-list', 'role-detail', 'user-detail', 'permission-detail'] })
     parentId?: string;
 
     /**
@@ -77,7 +77,7 @@ export class Role extends BaseEntity {
     @Property({ default: 0 })
     @IsInt({ message: '排序值必须是整数' })
     @Min(0, { message: '排序值不能小于0' })
-    @Expose({ groups: ['role-list', 'role-detail', 'user-detail'] })
+    @Expose({ groups: ['role-list', 'role-detail', 'user-detail', 'permission-detail'] })
     sort: number = 0;
 
     /**
@@ -86,7 +86,7 @@ export class Role extends BaseEntity {
      */
     @Property({ default: true })
     @IsBoolean({ message: '启用状态必须是布尔值' })
-    @Expose({ groups: ['role-list', 'role-detail', 'user-detail'] })
+    @Expose({ groups: ['role-list', 'role-detail', 'user-detail', 'permission-detail'] })
     isEnabled: boolean = true;
 
     /**
@@ -96,7 +96,7 @@ export class Role extends BaseEntity {
      */
     @Property({ default: false })
     @IsBoolean({ message: '系统角色标志必须是布尔值' })
-    @Expose({ groups: ['role-list', 'role-detail', 'user-detail'] })
+    @Expose({ groups: ['role-list', 'role-detail', 'user-detail', 'permission-detail'] })
     isSystem: boolean = false;
 
     /**

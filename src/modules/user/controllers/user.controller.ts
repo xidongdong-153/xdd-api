@@ -34,7 +34,7 @@ export class UserController {
     @ApiOperation({ summary: '获取当前用户信息', description: '获取当前登录用户的详细信息' })
     @SerializeOptions({ groups: ['user-detail'] })
     getCurrentUser(@Request() req: any) {
-        return this.userService.detail(req.user.id);
+        return this.userService.detail(req.user.id, ['roles']);
     }
 
     @Post()

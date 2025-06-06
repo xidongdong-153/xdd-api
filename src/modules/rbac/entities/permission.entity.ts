@@ -151,7 +151,7 @@ export class Permission extends BaseEntity {
         cascade: [Cascade.PERSIST],
     })
     @Type(() => Role)
-    @Expose({ groups: ['permission-detail'] })
+    @Expose({ groups: ['permission-detail'], toPlainOnly: true })
     @Transform(({ value }) => {
         if (value && value.isInitialized()) {
             return value.getItems();
